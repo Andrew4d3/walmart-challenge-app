@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "prestart": "npm run build",
-    "start": "next start",
+    "start": "next start -p $PORT",
     "docker-build": "docker build -t walmart-challenge-app .",
     "docker-start": "docker container run --network=host --rm --env-file ./.env.local -p 3000:3000 walmart-challenge-app"
   },
