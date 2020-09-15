@@ -1,3 +1,5 @@
+import getConfig from "next/config";
+
 const LIMIT_PAGE = 10;
 const API_URL = process.env.NEXT_PUBLIC_API;
 

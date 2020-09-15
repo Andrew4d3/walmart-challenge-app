@@ -5,7 +5,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "prestart": "npm run build",
+    "start": "next start",
+    "docker-build": "docker build -t walmart-challenge-app .",
+    "docker-start": "docker container run --network=host --rm --env-file ./.env.local -p 3000:3000 walmart-challenge-app"
   },
   "dependencies": {
     "bootstrap": "^4.5.2",
