@@ -2,9 +2,19 @@
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## Requirements
+- Node JS 12.8.3
+- Docker (for deployment)
+
 ## Run for development
 
-First create an `.env.local` file with the API URL. Example:
+First, install dependencies:
+
+```bash
+npm install
+```
+
+Create an `.env.local` file with the API URL. Example:
 
 ```
 NEXT_PUBLIC_API=http://localhost:8080
