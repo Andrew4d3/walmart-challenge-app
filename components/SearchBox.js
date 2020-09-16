@@ -2,14 +2,16 @@ import Navbar from "react-bootstrap/Navbar";
 import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 import { getProductById, getProductByQuery } from "../common/api";
+import React from "react";
 
 const DELAY_TIME = 1000;
 
-export const componentHandlerFactory = ({ sendResults }) => {
+export const componentHandlerFactory = ({ sendResults, setIsLoading }) => {
    const self = {};
 
    self.delayHandler = (fn, delay = DELAY_TIME, timer = null) => (event) => {
       const { target } = event;
+      setIsLoading(true);
       clearTimeout(timer);
       timer = setTimeout(() => {
          fn(target);
@@ -17,7 +19,17 @@ export const componentHandlerFactory = ({ sendResults }) => {
    };
 
    self.handleUniqueProduct = (searchValue) => (err, resp) => {
-      if (err) {
+      setIsLoading(false);
+      if (err && err.status == 404) {
+         sendResults({
+            searchValue,
+            totalPages: 0,
+            totalResults: 0,
+            currentPage: 0,
+            products: [],
+         });
+         return console.log(err);
+      } else if (err) {
          return console.log(err);
       }
 
@@ -31,6 +43,7 @@ export const componentHandlerFactory = ({ sendResults }) => {
    };
 
    self.handleListOfProducts = (searchValue) => (err, resp) => {
+      setIsLoading(false);
       if (err) {
          return console.log(err);
       }
@@ -46,19 +59,21 @@ export const componentHandlerFactory = ({ sendResults }) => {
          getProductById(searchValue, self.handleUniqueProduct(searchValue));
       } else if (searchValue.length >= 3) {
          // Any string
-         //self.queryBySearchTerms(searchValue);
          getProductByQuery(
             { search: searchValue },
             self.handleListOfProducts(searchValue)
          );
+      } else {
+         setIsLoading(false);
       }
    };
 
    return self;
 };
 
-export default function SearchBox(props) {
+export default React.memo(function SearchBox(props) {
    const componentHandler = componentHandlerFactory(props);
+
    const delaySearch = componentHandler.delayHandler(
       componentHandler.searchHandler
    );
@@ -66,7 +81,7 @@ export default function SearchBox(props) {
    return (
       <Navbar bg="primary" variant="dark" fixed="top">
          <Navbar.Brand href="#home">Lider</Navbar.Brand>
-         <Form inline>
+         <Form inline onSubmit={(e) => e.preventDefault()}>
             <FormControl
                type="text"
                placeholder="Buscar"
@@ -76,4 +91,4 @@ export default function SearchBox(props) {
          </Form>
       </Navbar>
    );
-}
+});

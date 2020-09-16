@@ -7,6 +7,7 @@
     "build": "next build",
     "prestart": "npm run build",
     "start": "next start -p $PORT",
+    "test": "jest",
     "docker-build": "docker build -t walmart-challenge-app .",
     "docker-start": "docker container run --network=host --rm --env-file ./.env.local -p 3000:3000 walmart-challenge-app"
   },
@@ -16,5 +17,30 @@
     "react": "16.13.1",
     "react-bootstrap": "^1.3.0",
     "react-dom": "16.13.1"
+  },
+  "devDependencies": {
+    "@testing-library/dom": "^7.24.2",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.0.4",
+    "babel-jest": "^26.3.0",
+    "jest": "^26.4.2",
+    "jest-dom": "^4.0.0"
+  },
+  "babel": {
+    "presets": [
+      "next/babel"
+    ]
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "<rootDir>/.next/",
+      "<rootDir>/node_modules/"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/setupTests.js"
+    ],
+    "transform": {
+      "^.+\\.(js|jsx|ts|tsx)$": "<rootDir>/node_modules/babel-jest"
+    }
   }
 }

@@ -8,7 +8,7 @@ const handleResponse = (resp) => {
       return resp.json();
    }
 
-   return Promise.reject(new Error(resp.statusText));
+   return Promise.reject(resp);
 };
 
 const callbackError = (cb) => (err) => cb(err);

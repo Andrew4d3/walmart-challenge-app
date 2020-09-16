@@ -9,6 +9,7 @@ export function formatPrice(price) {
 export default function ProductItem({ product }) {
    return (
       <Card
+         role="product"
          style={{
             width: "17rem",
             margin: "1em",

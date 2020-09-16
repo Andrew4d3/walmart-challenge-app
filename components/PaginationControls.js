@@ -1,11 +1,16 @@
 import Pagination from "react-bootstrap/Pagination";
 import { getProductByQuery } from "../common/api";
 
-export const paginationHandlerFactory = ({ results, sendResults }) => {
+export const paginationHandlerFactory = ({
+   results,
+   sendResults,
+   setIsLoading,
+}) => {
    const { searchValue } = results;
    const self = {};
 
    self.handleListOfProducts = (err, resp) => {
+      setIsLoading(false);
       if (err) {
          return console.log(err);
       }
@@ -15,6 +20,7 @@ export const paginationHandlerFactory = ({ results, sendResults }) => {
 
    self.loadPage = (page) => () => {
       if (results.currentPage !== page) {
+         setIsLoading(true);
          getProductByQuery(
             { search: searchValue, page },
             self.handleListOfProducts
@@ -34,6 +40,7 @@ export const getItems = (paginationHandler) => ({
    for (let number = 1; number <= totalPages; number++) {
       items.push(
          <Pagination.Item
+            role="page-btn"
             key={number}
             active={number === currentPage}
             onClick={paginationHandler.loadPage(number)}
