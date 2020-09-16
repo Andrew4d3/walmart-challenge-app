@@ -4,7 +4,13 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Run for development
 
-First, run the development server:
+First create an `.env.local` file with the API URL. Example:
+
+```
+NEXT_PUBLIC_API=http://localhost:8080
+```
+
+Then, run the development server:
 
 ```bash
 npm run dev
@@ -22,19 +28,14 @@ npm run test
 
 ## Run with Docker
 
-First create an `.env.local` file with the API URL. Example:
-
-```
-NEXT_PUBLIC_API=http://localhost:8080
-```
-
-Then, build the image:
+Build the image:
 
 ```bash
 npm run docker-build
 ```
 
 The image `walmart-challenge-app` would be ready to be deployed. You can also run the container locally by entering:
+(Remember to have your .env.local file put in place)
 
 ```bash
 npm run docker-start
